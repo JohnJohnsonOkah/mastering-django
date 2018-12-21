@@ -1,19 +1,17 @@
-from django.http import Http404, HttpResponse
-from django.template.loader import get_template
-from django.template import Context
+from django.http import Http404
+from django.shortcuts import render
+
 import datetime
 
 def hello(request):
-    return HttpResponse("Hello world")
+    return render(request, "Hello world")
 
 def my_homepage_view(request):
-    return HttpResponse("This is my Home Page!")
+    return render(request, "This is my Home Page!")
 
 def current_datetime(request):
     now = datetime.datetime.now()
-    t = get_template('current_datetime.html')
-    html = t.render(Context({'current_date': now}))
-    return HttpResponse(html)
+    return render(request, 'current_datetime.html', {'current_date': now})
 
 def hours_ahead(request, offset):
     try:
@@ -21,5 +19,4 @@ def hours_ahead(request, offset):
     except ValueError:
         raise Http404()
     dt = datetime.datetime.now() + datetime.timedelta(hours=offset)
-    html = "<html><body>In %s hour(s), it will be %s. </body></html>" % (offset, dt)
-    return HttpResponse(html)
+    return render(request, 'hours_ahead.html', {'offset': offset, 'next_time': dt})
