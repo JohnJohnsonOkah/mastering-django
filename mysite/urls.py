@@ -14,6 +14,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from books import views
 from mysite.views import hello, my_homepage_view, current_datetime, hours_ahead
 
 urlpatterns = [
@@ -22,4 +23,6 @@ urlpatterns = [
     url(r'^hello/$', hello),
     url(r'^time/$', current_datetime),
     url(r'^time/plus/(\d{1,2})/$', hours_ahead),
+    url(r'^search-form/$', views.search_form),
+    url(r'^search/$', views.search),
 ]
