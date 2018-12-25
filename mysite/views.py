@@ -34,8 +34,12 @@ def contact(request):
                 cd['message'],
                 cd.get('email', 'noreply@example.com'),
                 ['siteowner@example.com'],
+                # cd.get('email', ['noreply@example.com](mailto:'noreply%40example.com)'),
+                # [['siteowner@example.com](mailto:'siteowner%40example.com)'],
             )
             return HttpResponseRedirect('/contact/thanks/')
     else:
-        form = ContactForm()
+        form = ContactForm(
+            initial={'subject': 'I love your site!'}
+        )
     return render(request, 'contact_form.html', {'form': form})
